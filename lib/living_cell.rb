@@ -5,8 +5,17 @@ class LivingCell
   end
 
   def is_alive_next_round?(neighbors) 
-    return true if neighbors == 2 || neighbors == 3
+    count = alive_neighbors_count(neighbors)
+    return true if count == 2 || count == 3
     false
   end
 
+  def to_string
+    "X"
+  end
+
+  private
+  def alive_neighbors_count(neighbors)
+    neighbors.select { |neighbor| neighbor.is_alive? }.count
+  end
 end

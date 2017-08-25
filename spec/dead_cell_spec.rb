@@ -1,7 +1,9 @@
 require 'dead_cell'
+require 'living_cell'
 
 describe DeadCell do
   let(:dead_cell) { DeadCell.new() }
+  let(:neighbors) { Array.new(1, DeadCell.new) }
 
   it "is dead" do
     expect(dead_cell.is_alive?).to eq(false)
@@ -10,23 +12,33 @@ describe DeadCell do
   describe "next round" do
     
     it "is dead next round if it has 0 neighbors" do
-      expect(dead_cell.is_alive_next_round?(0)).to eq(false)
+      expect(dead_cell.is_alive_next_round?(neighbors)).to eq(false)
     end
 
     it "is dead next round if it has 1 neighbors" do
-      expect(dead_cell.is_alive_next_round?(1)).to eq(false)
+      neighbors.push(LivingCell.new)
+      expect(dead_cell.is_alive_next_round?(neighbors)).to eq(false)
     end
 
     it "is dead next round if it has 2 neighbors" do
-      expect(dead_cell.is_alive_next_round?(2)).to eq(false)
+      neighbors.push(LivingCell.new)
+      neighbors.push(LivingCell.new)
+      expect(dead_cell.is_alive_next_round?(neighbors)).to eq(false)
     end
 
     it "is alive next round if it has 3 neighbors" do
-      expect(dead_cell.is_alive_next_round?(3)).to eq(true)
+      neighbors.push(LivingCell.new)
+      neighbors.push(LivingCell.new)
+      neighbors.push(LivingCell.new)
+      expect(dead_cell.is_alive_next_round?(neighbors)).to eq(true)
     end
 
     it "is dead next round if it has 4 neighbors" do
-      expect(dead_cell.is_alive_next_round?(4)).to eq(false)
+      neighbors.push(LivingCell.new)
+      neighbors.push(LivingCell.new)
+      neighbors.push(LivingCell.new)
+      neighbors.push(LivingCell.new)
+      expect(dead_cell.is_alive_next_round?(neighbors)).to eq(false)
     end
 
   end
