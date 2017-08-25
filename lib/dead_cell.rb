@@ -10,7 +10,7 @@ class DeadCell
   end
 
   def to_string
-    "_"
+    " "
   end
 
   private

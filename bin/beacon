@@ -1,0 +1,30 @@
+#!/usr/bin/env ruby
+lib = File.expand_path("../../lib", __FILE__)
+$:.unshift(lib)
+
+require 'world'
+require 'world_creator'
+require 'world_drawler'
+require 'dead_cell'
+require 'living_cell'
+
+my_world = World.new(6, 6, DeadCell.new)
+my_creator = WorldCreator.new
+io = WorldDrawler.new
+
+my_world.set_cell(1, 1, LivingCell.new)
+my_world.set_cell(1, 2, LivingCell.new)
+my_world.set_cell(2, 1, LivingCell.new)
+my_world.set_cell(2, 2, LivingCell.new)
+
+my_world.set_cell(3, 3, LivingCell.new)
+my_world.set_cell(3, 4, LivingCell.new)
+my_world.set_cell(4, 3, LivingCell.new)
+my_world.set_cell(4, 4, LivingCell.new)
+
+begin
+  my_world = my_creator.create_next_world(my_world)
+  io.print_world(my_world)
+  input = STDIN.getc
+  
+end while input != "q"
